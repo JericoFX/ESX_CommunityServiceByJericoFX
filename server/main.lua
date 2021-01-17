@@ -2,17 +2,6 @@ FXCore = nil
 
 TriggerEvent(Config.Core, function(obj) FXCore = obj end)
 
-
---RegisterCommand( 'comserv', 'admin', function(source, args, user)
---	if args[1] and GetPlayerName(args[1]) ~= nil and tonumber(args[2]) then
---		TriggerEvent('esx_communityservice:sendToCommunityService', tonumber(args[1]), tonumber(args[2]))
---	else
---		TriggerClientEvent('chat:addMessage', source, { args = { _U('system_msn'), _U('invalid_player_id_or_actions') } } )
---	end
---end, function(source, args, user)
---	TriggerClientEvent('chat:addMessage', source, { args = { _U('system_msn'), _U('insufficient_permissions') } })
---end, {help = _U('give_player_community'), params = {{name = "id", help = _U('target_id')}, {name = "actions", help = _U('action_count_suggested')}}})
---_U('system_msn')
 FXCore.Commands.Add("comserv", _U('give_player_community'), {{name = "id", help = _U('target_id')}, {name = "actions", help = _U('action_count_suggested')}}, false, function(source, args, user)
 	local Player = FXCore.Functions.GetPlayer(source)
 	if args[1] and GetPlayerName(args[1]) ~= nil and tonumber(args[2]) then
@@ -24,31 +13,20 @@ end,"admin")
 
 FXCore.Commands.Add("endcomserv", "End Community Service", { { name = "id", help = _U('target_id') } }, false, function(source, args, user)
 	local Player = FXCore.Functions.GetPlayer(source)
+
 	if args[1] then
 		if args[1] ~= nil then
+			TriggerEvent('esx_communityservice:endCommunityServiceCommand', tonumber(args[1]))
 		else
 			TriggerClientEvent('chat:addMessage', source, { args = { _U('system_msn'), _U('invalid_player_id') } })
 		end
 	else
 		print("SIP")
-		TriggerEvent('esx_communityservice:endCommunityServiceCommand', source)
+		
 	end
 end, "admin")
 
 
---TriggerEvent('es:addGroupCommand', 'endcomserv', 'admin', function(source, args, user)
---	if args[1] then
---		if GetPlayerName(args[1]) ~= nil then
---			TriggerEvent('esx_communityservice:endCommunityServiceCommand', tonumber(args[1]))
---		else
---			TriggerClientEvent('chat:addMessage', source, { args = { _U('system_msn'), _U('invalid_player_id')  } } )
---		end
---	else
---		TriggerEvent('esx_communityservice:endCommunityServiceCommand', source)
---	end
---end, function(source, args, user)
---	TriggerClientEvent('chat:addMessage', source, { args = { _U('system_msn'), _U('insufficient_permissions') } })
---end, {help = _U('unjail_people'), params = {{name = "id", help = _U('target_id')}}})
 RegisterServerEvent("fx-clothes:loadPlayerSkinjerico") --DO NOT CHANGE THIS
 AddEventHandler('fx-clothes:loadPlayerSkinjerico', function(source)
     local src = source
